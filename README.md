@@ -1,4 +1,5 @@
 # CivicPulse
+<<<<<<< HEAD
 
 CivicPulse is a Smart Governance Management Platform built with Java Spring Boot, Thymeleaf, Spring Data JPA, and MySQL.
 
@@ -22,3 +23,6 @@ CivicPulse is a Smart Governance Management Platform built with Java Spring Boot
 - `src/main/java/com/civicpulse` for application code
 - `src/main/resources/templates` for Thymeleaf pages
 - `src/main/resources/static` for CSS, JS, and images
+=======
+Smart Governance Management Platform using Java Spring Boot
+>>>>>>> 92c03c384f76fb8ae684811f213dfe63a1be1716
