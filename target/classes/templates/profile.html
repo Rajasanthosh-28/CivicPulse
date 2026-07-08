@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('My Profile')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: sidebar('profile')}"></nav>
+    <header th:replace="~{fragments/layout :: navbar}"></header>
+    <div th:replace="~{fragments/layout :: toasts}"></div>
+    
+    <main class="main-content">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">My Profile</h1>
+                <div class="page-breadcrumb">Account &gt; My Profile</div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Avatar & Summary -->
+            <div class="col-lg-4">
+                <div class="card text-center p-4">
+                    <div class="profile-avatar-lg mx-auto mb-3 d-flex align-items-center justify-content-center bg-primary text-white rounded-circle shadow" style="width: 100px; height: 100px; font-size: 2.5rem; font-weight: 700;">
+                        <span th:text="${user.fullName != null ? user.fullName.substring(0,1).toUpperCase() : 'U'}">U</span>
+                    </div>
+                    <h3 class="h5 font-weight-bold mb-1" th:text="${user.fullName}">User Name</h3>
+                    <span class="badge bg-primary-subtle text-primary mb-3 px-3 py-2 rounded-pill">Citizen</span>
+                    
+                    <div class="border-top pt-3 mt-2 text-start">
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="text-secondary small">Email:</span>
+                            <span class="small font-weight-medium" th:text="${user.email}">email@example.com</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="text-secondary small">Phone:</span>
+                            <span class="small font-weight-medium" th:text="${user.phone != null ? user.phone : 'Not provided'}">N/A</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="text-secondary small">Member Since:</span>
+                            <span class="small font-weight-medium" th:text="${user.createdAt != null ? #temporals.format(user.createdAt, 'dd MMM yyyy') : 'Recently'}">Jan 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4 p-4 bg-primary text-white border-0 shadow">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h4 class="h6 mb-1 text-white-50">Need assistance?</h4>
+                            <p class="small mb-0">Contact our citizen support helpline for account queries.</p>
+                        </div>
+                        <i class="bi bi-headset fs-1 text-white-50"></i>
+                    </div>
+                    <a href="/help" class="btn btn-light btn-sm mt-3 w-100 fw-bold">Visit Help Center</a>
+                </div>
+            </div>
+
+            <!-- Right Column: Edit Details & Password -->
+            <div class="col-lg-8">
+                <!-- Personal Information Form -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center border-bottom pb-3">
+                        <h2 class="card-title h6 mb-0 font-weight-bold"><i class="bi bi-person-lines-fill me-2 text-primary"></i>Personal Information</h2>
+                    </div>
+                    <div class="card-body pt-3">
+                        <form th:action="@{/profile}" method="post">
+                            <div class="row g-3">
+                                <div class="col-md-6 form-group">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" name="fullName" th:value="${user.fullName}" required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="form-label">Email Address (Read-only)</label>
+                                    <input type="email" class="form-control bg-light" th:value="${user.email}" disabled>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" name="phone" th:value="${user.phone}" placeholder="+91 XXXXX XXXXX">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="form-label">Role</label>
+                                    <input type="text" class="form-control bg-light" th:value="${user.role}" disabled>
+                                </div>
+                                <div class="col-12 form-group">
+                                    <label class="form-label">Residential Address</label>
+                                    <textarea class="form-control" name="address" rows="3" placeholder="Enter your full street address, landmark, city, and pincode..." th:text="${user.address}"></textarea>
+                                </div>
+                                <div class="col-12 mt-3 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary px-4">
+                                        <i class="bi bi-check2-circle"></i> Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="card mb-4">
+                    <div class="card-header border-bottom pb-3">
+                        <h2 class="card-title h6 mb-0 font-weight-bold"><i class="bi bi-shield-lock me-2 text-primary"></i>Security &amp; Password</h2>
+                    </div>
+                    <div class="card-body pt-3">
+                        <form onsubmit="event.preventDefault(); window.showToast('Password change feature will be enabled after SMS OTP verification is activated by the administration.', 'info');">
+                            <div class="row g-3">
+                                <div class="col-md-4 form-group">
+                                    <label class="form-label">Current Password</label>
+                                    <input type="password" class="form-control" placeholder="••••••••">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" class="form-control" placeholder="••••••••">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" placeholder="••••••••">
+                                </div>
+                                <div class="col-12 mt-3 d-flex justify-content-between align-items-center">
+                                    <span class="text-muted small"><i class="bi bi-info-circle me-1"></i>Password must be at least 8 characters with numbers &amp; symbols.</span>
+                                    <button type="submit" class="btn btn-secondary px-4">Update Password</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="card border-danger">
+                    <div class="card-header border-bottom pb-3 bg-danger-subtle text-danger">
+                        <h2 class="card-title h6 mb-0 font-weight-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Danger Zone</h2>
+                    </div>
+                    <div class="card-body pt-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div>
+                            <h3 class="h6 mb-1 font-weight-bold">Delete Citizen Account</h3>
+                            <p class="small text-secondary mb-0">Permanently deactivate your profile and archive all historical grievances.</p>
+                        </div>
+                        <button type="button" class="btn btn-danger" onclick="window.showToast('Please submit an official account closure request to support@civicpulse.gov.in', 'warning');">
+                            <i class="bi bi-trash3 me-1"></i> Request Account Deletion
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

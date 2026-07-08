@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Submit Complaint')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: sidebar('submit')}"></nav>
+    <header th:replace="~{fragments/layout :: navbar}"></header>
+    <div th:replace="~{fragments/layout :: toasts}"></div>
+    
+    <main class="main-content container py-4" style="max-width: 900px;">
+        <!-- Page Header -->
+        <div class="mb-4">
+            <h1 class="h3 fw-bold mb-1">Submit New Complaint</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a th:href="@{/citizen-dashboard}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Submit Complaint</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="card border-0 shadow-sm p-4 mb-5">
+            <!-- Step Progress Row -->
+            <div class="step-progress d-flex justify-content-between align-items-center mb-5 position-relative px-2 px-md-5">
+                <div class="progress position-absolute" style="top: 20px; left: 10%; width: 80%; height: 4px; z-index: 1;">
+                    <div id="progressBar" class="progress-bar bg-primary transition-all" role="progressbar" style="width: 0%;"></div>
+                </div>
+                <div class="step-item text-center position-relative z-2 active" data-step="1">
+                    <div class="step-circle rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto fw-bold shadow-sm" style="width: 44px; height: 44px;">1</div>
+                    <div class="small fw-semibold mt-2">Personal Info</div>
+                </div>
+                <div class="step-item text-center position-relative z-2" data-step="2">
+                    <div class="step-circle rounded-circle bg-light text-muted border d-flex align-items-center justify-content-center mx-auto fw-bold shadow-sm" style="width: 44px; height: 44px;">2</div>
+                    <div class="small fw-semibold mt-2 text-muted">Details</div>
+                </div>
+                <div class="step-item text-center position-relative z-2" data-step="3">
+                    <div class="step-circle rounded-circle bg-light text-muted border d-flex align-items-center justify-content-center mx-auto fw-bold shadow-sm" style="width: 44px; height: 44px;">3</div>
+                    <div class="small fw-semibold mt-2 text-muted">Attachments</div>
+                </div>
+                <div class="step-item text-center position-relative z-2" data-step="4">
+                    <div class="step-circle rounded-circle bg-light text-muted border d-flex align-items-center justify-content-center mx-auto fw-bold shadow-sm" style="width: 44px; height: 44px;">4</div>
+                    <div class="small fw-semibold mt-2 text-muted">Review</div>
+                </div>
+            </div>
+
+            <!-- Multi-step Form -->
+            <form id="complaintMultiStepForm" action="/complaints" method="post" enctype="multipart/form-data">
+                <!-- Step 1: Personal Info -->
+                <div class="step-content active" id="stepContent1">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Step 1: Personal Information</h5>
+                    <p class="text-muted small mb-4">Please verify your contact details so our officers can reach you regarding your complaint.</p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                            <input type="text" name="fullName" id="inpFullName" class="form-control" th:value="${user != null and user.fullName != null ? user.fullName : ''}" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" name="email" id="inpEmail" class="form-control" th:value="${user != null and user.email != null ? user.email : ''}" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
+                            <input type="text" name="phone" id="inpPhone" class="form-control" th:value="${user != null and user.phone != null ? user.phone : ''}" placeholder="+91 9876543210" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Residential Address <span class="text-danger">*</span></label>
+                            <input type="text" name="address" id="inpAddress" class="form-control" th:value="${user != null and user.address != null ? user.address : ''}" placeholder="Apt, Street, Area, City" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Complaint Details -->
+                <div class="step-content d-none" id="stepContent2">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Step 2: Complaint Details</h5>
+                    <p class="text-muted small mb-4">Provide accurate details about the civic issue to help us assign it to the right department.</p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
+                            <select name="category" id="inpCategory" class="form-select" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="Roads">Roads</option>
+                                <option value="Water Supply">Water Supply</option>
+                                <option value="Electricity">Electricity</option>
+                                <option value="Garbage Collection">Garbage Collection</option>
+                                <option value="Street Lights">Street Lights</option>
+                                <option value="Sewage">Sewage</option>
+                                <option value="Public Transport">Public Transport</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Priority <span class="text-danger">*</span></label>
+                            <select name="priority" id="inpPriority" class="form-select" required>
+                                <option value="LOW">LOW</option>
+                                <option value="MEDIUM" selected>MEDIUM</option>
+                                <option value="HIGH">HIGH</option>
+                                <option value="URGENT">URGENT</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Complaint Title <span class="text-danger">*</span></label>
+                            <input type="text" name="title" id="inpTitle" class="form-control" placeholder="Brief summary of the issue (e.g. Deep pothole near Market road)" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Location / Landmark <span class="text-danger">*</span></label>
+                            <input type="text" name="location" id="inpLocation" class="form-control" placeholder="Exact street name, ward number, or nearby landmark" required>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label fw-semibold">Detailed Description <span class="text-danger">*</span></label>
+                                <small class="text-muted"><span id="charCount">0</span>/1000</small>
+                            </div>
+                            <textarea name="description" id="inpDescription" class="form-control" rows="5" data-maxlength="1000" maxlength="1000" placeholder="Describe the issue in detail, including how long it has persisted..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Attachments -->
+                <div class="step-content d-none" id="stepContent3">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Step 3: Supporting Attachments</h5>
+                    <p class="text-muted small mb-4">Attach photos or documents related to the complaint for quicker verification.</p>
+                    <div class="border border-2 border-dashed rounded-3 p-5 text-center bg-light mb-3 dropzone-area" id="dropzoneArea" style="cursor: pointer;">
+                        <i class="bi bi-cloud-arrow-up text-primary display-4 mb-2 d-block"></i>
+                        <h6 class="fw-bold mb-1">Drag and drop file here, or click to browse</h6>
+                        <p class="text-muted small mb-3">Supported formats: JPG, PNG, PDF (Max size: 5MB)</p>
+                        <input type="file" name="image" id="fileInput" class="d-none" accept="image/*,.pdf">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="document.getElementById('fileInput').click()">Select File</button>
+                    </div>
+                    <div id="filePreview" class="d-none alert alert-secondary d-flex align-items-center justify-content-between p-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-file-earmark-check fs-3 text-success"></i>
+                            <div>
+                                <div class="fw-semibold small" id="previewFileName">filename.jpg</div>
+                                <div class="text-muted" style="font-size: 0.75rem;" id="previewFileSize">1.2 MB</div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" aria-label="Remove file" id="removeFileBtn"></button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Review -->
+                <div class="step-content d-none" id="stepContent4">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Step 4: Review Summary</h5>
+                    <p class="text-muted small mb-4">Please verify all details before submitting your complaint.</p>
+                    
+                    <div class="card bg-light border-0 p-4 mb-4">
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <span class="text-muted small d-block">Applicant Name</span>
+                                <strong id="revName">Name</strong>
+                            </div>
+                            <div class="col-sm-6">
+                                <span class="text-muted small d-block">Contact Phone</span>
+                                <strong id="revPhone">Phone</strong>
+                            </div>
+                            <div class="col-sm-6">
+                                <span class="text-muted small d-block">Category</span>
+                                <strong id="revCategory">Category</strong>
+                            </div>
+                            <div class="col-sm-6">
+                                <span class="text-muted small d-block">Priority</span>
+                                <strong id="revPriority">Priority</strong>
+                            </div>
+                            <div class="col-12">
+                                <span class="text-muted small d-block">Title</span>
+                                <strong id="revTitle">Title</strong>
+                            </div>
+                            <div class="col-12">
+                                <span class="text-muted small d-block">Location</span>
+                                <strong id="revLocation">Location</strong>
+                            </div>
+                            <div class="col-12">
+                                <span class="text-muted small d-block">Description</span>
+                                <p class="mb-0 bg-white p-3 rounded border small" id="revDescription">Description text...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="termsCheckbox" required>
+                        <label class="form-check-label small" for="termsCheckbox">
+                            I confirm that the information provided above is true and accurate to the best of my knowledge.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="d-flex justify-content-between pt-4 border-top mt-4">
+                    <button type="button" class="btn btn-outline-secondary px-4 d-none" id="prevBtn">Previous</button>
+                    <div class="ms-auto">
+                        <button type="button" class="btn btn-primary px-4" id="nextBtn">Next</button>
+                        <button type="submit" class="btn btn-success px-5 d-none" id="submitBtn">Submit Complaint</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentStep = 1;
+        const totalSteps = 4;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressBar = document.getElementById('progressBar');
+        const stepContents = document.querySelectorAll('.step-content');
+        const stepItems = document.querySelectorAll('.step-item');
+
+        function showStep(step) {
+            stepContents.forEach((el, idx) => {
+                if (idx + 1 === step) {
+                    el.classList.remove('d-none');
+                    el.classList.add('active');
+                } else {
+                    el.classList.add('d-none');
+                    el.classList.remove('active');
+                }
+            });
+
+            stepItems.forEach((el, idx) => {
+                const stepNum = idx + 1;
+                const circle = el.querySelector('.step-circle');
+                const label = el.querySelector('div:last-child');
+                if (stepNum <= step) {
+                    el.classList.add('active');
+                    circle.classList.remove('bg-light', 'text-muted', 'border');
+                    circle.classList.add('bg-primary', 'text-white');
+                    label.classList.remove('text-muted');
+                } else {
+                    el.classList.remove('active');
+                    circle.classList.remove('bg-primary', 'text-white');
+                    circle.classList.add('bg-light', 'text-muted', 'border');
+                    label.classList.add('text-muted');
+                }
+            });
+
+            const progressPct = ((step - 1) / (totalSteps - 1)) * 100;
+            if (progressBar) progressBar.style.width = progressPct + '%';
+
+            if (step === 1) {
+                prevBtn.classList.add('d-none');
+            } else {
+                prevBtn.classList.remove('d-none');
+            }
+
+            if (step === totalSteps) {
+                nextBtn.classList.add('d-none');
+                submitBtn.classList.remove('d-none');
+                populateReview();
+            } else {
+                nextBtn.classList.remove('d-none');
+                submitBtn.classList.add('d-none');
+            }
+        }
+
+        function validateStep(step) {
+            const content = document.getElementById('stepContent' + step);
+            if (!content) return true;
+            const inputs = content.querySelectorAll('input[required], select[required], textarea[required]');
+            let valid = true;
+            inputs.forEach(inp => {
+                if (!inp.checkValidity()) {
+                    inp.reportValidity();
+                    valid = false;
+                }
+            });
+            return valid;
+        }
+
+        function populateReview() {
+            document.getElementById('revName').innerText = document.getElementById('inpFullName')?.value || '-';
+            document.getElementById('revPhone').innerText = document.getElementById('inpPhone')?.value || '-';
+            document.getElementById('revCategory').innerText = document.getElementById('inpCategory')?.value || '-';
+            document.getElementById('revPriority').innerText = document.getElementById('inpPriority')?.value || '-';
+            document.getElementById('revTitle').innerText = document.getElementById('inpTitle')?.value || '-';
+            document.getElementById('revLocation').innerText = document.getElementById('inpLocation')?.value || '-';
+            document.getElementById('revDescription').innerText = document.getElementById('inpDescription')?.value || '-';
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (validateStep(currentStep)) {
+                    if (currentStep < totalSteps) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                }
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+        }
+
+        // Character counter
+        const descInp = document.getElementById('inpDescription');
+        const charCount = document.getElementById('charCount');
+        if (descInp && charCount) {
+            descInp.addEventListener('input', function() {
+                charCount.innerText = this.value.length;
+            });
+        }
+
+        // Dropzone & File input handling
+        const dropzone = document.getElementById('dropzoneArea');
+        const fileInput = document.getElementById('fileInput');
+        const filePreview = document.getElementById('filePreview');
+        const removeFileBtn = document.getElementById('removeFileBtn');
+
+        if (dropzone && fileInput) {
+            dropzone.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+                    fileInput.click();
+                }
+            });
+
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('border-primary', 'bg-primary-subtle');
+            });
+
+            dropzone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('border-primary', 'bg-primary-subtle');
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('border-primary', 'bg-primary-subtle');
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileSelect(fileInput.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files && fileInput.files.length > 0) {
+                    handleFileSelect(fileInput.files[0]);
+                }
+            });
+        }
+
+        function handleFileSelect(file) {
+            if (!file) return;
+            document.getElementById('previewFileName').innerText = file.name;
+            const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            document.getElementById('previewFileSize').innerText = sizeMB + ' MB';
+            filePreview.classList.remove('d-none');
+        }
+
+        if (removeFileBtn) {
+            removeFileBtn.addEventListener('click', () => {
+                if (fileInput) fileInput.value = '';
+                if (filePreview) filePreview.classList.add('d-none');
+            });
+        }
+    });
+    </script>
+</body>
+</html>

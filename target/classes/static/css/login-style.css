@@ -1,0 +1,865 @@
+/* ============================================================
+   CivicPulse — Premium Login Page Styles
+   ============================================================ */
+
+/* ---------- CSS Custom Properties (Light Theme) ---------- */
+:root {
+    --primary-1: #2563EB;
+    --primary-2: #4F46E5;
+    --primary-3: #06B6D4;
+    --accent-1: #14B8A6;
+    --accent-2: #8B5CF6;
+    --error: #EF4444;
+    --success: #22C55E;
+    --warning: #F59E0B;
+
+    --bg-gradient: linear-gradient(135deg, #2563EB 0%, #4F46E5 40%, #06B6D4 100%);
+    --card-bg: rgba(255, 255, 255, 0.15);
+    --card-border: rgba(255, 255, 255, 0.25);
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    --input-bg: rgba(255, 255, 255, 0.12);
+    --input-border: rgba(255, 255, 255, 0.2);
+    --input-focus-border: rgba(255, 255, 255, 0.5);
+    --input-text: #ffffff;
+    --input-placeholder: rgba(255, 255, 255, 0.55);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.75);
+    --text-muted: rgba(255, 255, 255, 0.55);
+    --divider: rgba(255, 255, 255, 0.15);
+    --tab-active-bg: rgba(255, 255, 255, 0.2);
+    --tab-hover-bg: rgba(255, 255, 255, 0.1);
+    --checkbox-border: rgba(255, 255, 255, 0.35);
+    --link-color: #67E8F9;
+    --link-hover: #A5F3FC;
+    --btn-gradient: linear-gradient(135deg, #2563EB, #8B5CF6, #06B6D4);
+    --btn-hover-gradient: linear-gradient(135deg, #1D4ED8, #7C3AED, #0891B2);
+    --strength-bg: rgba(255, 255, 255, 0.12);
+    --toggle-bg: rgba(255, 255, 255, 0.12);
+    --toggle-knob: #ffffff;
+    --alert-error-bg: rgba(239, 68, 68, 0.15);
+    --alert-error-border: rgba(239, 68, 68, 0.3);
+    --alert-success-bg: rgba(34, 197, 94, 0.15);
+    --alert-success-border: rgba(34, 197, 94, 0.3);
+}
+
+/* ---------- Dark Theme Overrides ---------- */
+[data-theme="dark"] {
+    --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E1B4B 40%, #164E63 100%);
+    --card-bg: rgba(15, 23, 42, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    --input-bg: rgba(255, 255, 255, 0.06);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --input-focus-border: rgba(139, 92, 246, 0.6);
+    --input-text: #E2E8F0;
+    --input-placeholder: rgba(255, 255, 255, 0.3);
+    --text-primary: #F1F5F9;
+    --text-secondary: rgba(241, 245, 249, 0.7);
+    --text-muted: rgba(241, 245, 249, 0.45);
+    --divider: rgba(255, 255, 255, 0.06);
+    --tab-active-bg: rgba(139, 92, 246, 0.25);
+    --tab-hover-bg: rgba(139, 92, 246, 0.1);
+    --checkbox-border: rgba(255, 255, 255, 0.2);
+    --link-color: #A78BFA;
+    --link-hover: #C4B5FD;
+    --btn-gradient: linear-gradient(135deg, #4F46E5, #7C3AED, #0891B2);
+    --btn-hover-gradient: linear-gradient(135deg, #4338CA, #6D28D9, #0E7490);
+    --strength-bg: rgba(255, 255, 255, 0.06);
+    --toggle-bg: rgba(139, 92, 246, 0.3);
+    --toggle-knob: #A78BFA;
+}
+
+/* ---------- Global Reset & Base ---------- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--text-primary);
+    transition: background 0.5s ease;
+}
+
+/* ---------- Animated Background ---------- */
+.bg-animated {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: floatBlob 18s ease-in-out infinite;
+}
+
+.blob-1 {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, #2563EB, transparent 70%);
+    top: -10%;
+    left: -5%;
+    animation-duration: 20s;
+}
+
+.blob-2 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #8B5CF6, transparent 70%);
+    top: 50%;
+    right: -8%;
+    animation-duration: 24s;
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #06B6D4, transparent 70%);
+    bottom: -5%;
+    left: 30%;
+    animation-duration: 22s;
+    animation-delay: -10s;
+}
+
+.blob-4 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #14B8A6, transparent 70%);
+    top: 20%;
+    right: 25%;
+    animation-duration: 16s;
+    animation-delay: -3s;
+}
+
+.blob-5 {
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, #4F46E5, transparent 70%);
+    bottom: 25%;
+    left: -3%;
+    animation-duration: 26s;
+    animation-delay: -8s;
+}
+
+@keyframes floatBlob {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    25% {
+        transform: translate(60px, -40px) scale(1.08);
+    }
+    50% {
+        transform: translate(-30px, 50px) scale(0.95);
+    }
+    75% {
+        transform: translate(40px, 20px) scale(1.05);
+    }
+}
+
+/* Floating circle particles */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ---------- Main Layout ---------- */
+.login-wrapper {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+/* ---------- Glassmorphism Card ---------- */
+.login-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--card-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    padding: 40px 36px 32px;
+    animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.22);
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- Page Fade-in ---------- */
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ---------- Logo & Branding ---------- */
+.brand-section {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.brand-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--btn-gradient);
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-icon:hover {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 6px 28px rgba(37, 99, 235, 0.5);
+}
+
+.brand-icon i {
+    font-size: 28px;
+    color: #ffffff;
+}
+
+.brand-title {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+}
+
+.brand-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 0.2px;
+}
+
+/* ---------- Role Tabs ---------- */
+.role-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 24px;
+    gap: 4px;
+}
+
+.role-tab {
+    flex: 1;
+    padding: 9px 8px;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.role-tab:hover {
+    background: var(--tab-hover-bg);
+    color: var(--text-secondary);
+}
+
+.role-tab.active {
+    background: var(--tab-active-bg);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.role-tab i {
+    font-size: 0.9rem;
+}
+
+/* ---------- Role Forms ---------- */
+.role-form {
+    display: none;
+}
+
+.role-form.active {
+    display: block;
+    animation: fadeIn 0.35s ease-out;
+}
+
+/* ---------- Alerts ---------- */
+.alert-custom {
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 0.83rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: alertSlide 0.4s ease-out;
+    backdrop-filter: blur(8px);
+    border: 1px solid;
+}
+
+.alert-custom i {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.alert-error {
+    background: var(--alert-error-bg);
+    border-color: var(--alert-error-border);
+    color: #FCA5A5;
+}
+
+.alert-success {
+    background: var(--alert-success-bg);
+    border-color: var(--alert-success-border);
+    color: #86EFAC;
+}
+
+@keyframes alertSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- Form Groups ---------- */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper .input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.input-wrapper .form-input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 12px;
+    color: var(--input-text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.input-wrapper .form-input::placeholder {
+    color: var(--input-placeholder);
+}
+
+.input-wrapper .form-input:focus {
+    border-color: var(--input-focus-border);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15), 0 0 20px rgba(139, 92, 246, 0.08);
+}
+
+.input-wrapper .form-input:focus ~ .input-icon {
+    color: var(--link-color);
+}
+
+/* Password toggle */
+.password-toggle {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    color: var(--text-primary);
+}
+
+.input-wrapper .form-input.has-toggle {
+    padding-right: 44px;
+}
+
+/* ---------- Password Strength Indicator ---------- */
+.password-strength {
+    margin-top: 8px;
+}
+
+.strength-bar {
+    height: 4px;
+    border-radius: 4px;
+    background: var(--strength-bg);
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.strength-fill {
+    height: 100%;
+    border-radius: 4px;
+    width: 0;
+    transition: width 0.4s ease, background 0.4s ease;
+}
+
+.strength-text {
+    font-size: 0.7rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+/* ---------- Remember Me & Forgot ---------- */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-2);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.remember-me span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.forgot-link {
+    font-size: 0.8rem;
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.forgot-link:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+/* ---------- Login Button ---------- */
+.btn-login {
+    width: 100%;
+    padding: 13px;
+    background: var(--btn-gradient);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.3px;
+}
+
+.btn-login:hover {
+    background: var(--btn-hover-gradient);
+    background-size: 200% 200%;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(79, 70, 229, 0.4);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.btn-login.loading {
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+/* Ripple effect */
+.btn-login .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: rippleEffect 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Spinner */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+}
+
+.btn-login.loading .spinner {
+    display: block;
+}
+
+.btn-login.loading .btn-text {
+    display: none;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------- Divider ---------- */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 22px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--divider);
+}
+
+.divider span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ---------- Secondary Buttons ---------- */
+.btn-secondary-custom {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.btn-secondary-custom:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.btn-home {
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-home:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- Dark Mode Toggle ---------- */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: var(--toggle-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+    font-size: 1.15rem;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode-toggle .bi-moon-fill {
+    display: inline;
+}
+
+.dark-mode-toggle .bi-sun-fill {
+    display: none;
+}
+
+[data-theme="dark"] .dark-mode-toggle .bi-moon-fill {
+    display: none;
+}
+
+[data-theme="dark"] .dark-mode-toggle .bi-sun-fill {
+    display: inline;
+}
+
+/* ---------- Back to Home (top-left) ---------- */
+.back-home-float {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    background: var(--toggle-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.back-home-float:hover {
+    transform: translateX(-3px);
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+.back-home-float i {
+    font-size: 0.9rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 575.98px) {
+    .login-card {
+        padding: 30px 22px 26px;
+        border-radius: 16px;
+        max-width: 100%;
+    }
+
+    .brand-title {
+        font-size: 1.3rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.76rem;
+    }
+
+    .role-tab {
+        font-size: 0.7rem;
+        padding: 8px 4px;
+    }
+
+    .role-tab i {
+        display: none;
+    }
+
+    .brand-icon {
+        width: 52px;
+        height: 52px;
+    }
+
+    .brand-icon i {
+        font-size: 24px;
+    }
+
+    .back-home-float {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+
+    .dark-mode-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    .blob {
+        filter: blur(60px);
+        opacity: 0.25;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .login-card {
+        max-width: 420px;
+        padding: 36px 30px 28px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .login-card {
+        max-width: 440px;
+    }
+}
+
+@media (min-width: 992px) {
+    .login-card {
+        max-width: 440px;
+    }
+}
+
+/* ---------- Accessibility: Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .blob,
+    .particle {
+        animation: none !important;
+    }
+
+    .login-card {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+    }
+
+    .alert-custom {
+        animation: none !important;
+    }
+
+    * {
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ---------- Selection ---------- */
+::selection {
+    background: rgba(139, 92, 246, 0.4);
+    color: #ffffff;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}

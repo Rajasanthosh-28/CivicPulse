@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Portal Settings')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: sidebar('settings')}"></nav>
+    <header th:replace="~{fragments/layout :: navbar}"></header>
+    <div th:replace="~{fragments/layout :: toasts}"></div>
+    
+    <main class="main-content">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Preferences &amp; Portal Settings</h1>
+                <div class="page-breadcrumb">Account &gt; Portal Settings</div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Settings Navigation / Overview -->
+            <div class="col-lg-3">
+                <div class="card p-3 sticky-top" style="top: 85px;">
+                    <div class="nav flex-column nav-pills gap-1">
+                        <a href="#appearanceSection" class="nav-link active d-flex align-items-center gap-2 py-2 px-3 rounded-3 font-weight-medium">
+                            <i class="bi bi-palette-fill"></i> Appearance
+                        </a>
+                        <a href="#notificationsSection" class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-3 font-weight-medium text-secondary">
+                            <i class="bi bi-bell-fill"></i> Notifications
+                        </a>
+                        <a href="#localizationSection" class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-3 font-weight-medium text-secondary">
+                            <i class="bi bi-translate"></i> Language &amp; Region
+                        </a>
+                        <a href="#privacySection" class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-3 font-weight-medium text-secondary">
+                            <i class="bi bi-shield-lock-fill"></i> Privacy &amp; Data
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Settings Sections -->
+            <div class="col-lg-9 d-flex flex-column gap-4">
+                <!-- Appearance -->
+                <div class="card p-4" id="appearanceSection">
+                    <div class="card-header border-bottom pb-3 mb-3">
+                        <h2 class="card-title h6 mb-0 font-weight-bold"><i class="bi bi-palette text-primary me-2"></i>Theme &amp; Visual Appearance</h2>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center py-2">
+                        <div>
+                            <span class="font-weight-bold d-block text-primary">Dark Mode Interface</span>
+                            <span class="small text-secondary">Switch to a high-contrast dark theme for comfortable low-light browsing.</span>
+                        </div>
+                        <div class="form-check form-switch fs-4 mb-0">
+                            <input class="form-check-input cursor-pointer" type="checkbox" id="settingsDarkToggle">
+                        </div>
+                    </div>
+                    <hr class="my-3 text-muted">
+                    <div class="d-flex justify-content-between align-items-center py-2">
+                        <div>
+                            <span class="font-weight-bold d-block text-primary">Reduce Animations</span>
+                            <span class="small text-secondary">Disable UI transition effects if you prefer static layout rendering.</span>
+                        </div>
+                        <div class="form-check form-switch fs-4 mb-0">
+                            <input class="form-check-input cursor-pointer" type="checkbox">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="card p-4" id="notificationsSection">
+                    <div class="card-header border-bottom pb-3 mb-3">
+                        <h2 class="card-title h6 mb-0 font-weight-bold"><i class="bi bi-bell text-primary me-2"></i>Notification Delivery Preferences</h2>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="font-weight-bold d-block text-primary">Real-time Grievance Alerts</span>
+                                <span class="small text-secondary">Receive instant in-portal notifications whenever your grievance changes status.</span>
+                            </div>
+                            <div class="form-check form-switch fs-4 mb-0">
+                                <input class="form-check-input cursor-pointer" type="checkbox" checked>
+                            </div>
+                        </div>
+                        <hr class="my-1 text-muted">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="font-weight-bold d-block text-primary">Email Status Updates</span>
+                                <span class="small text-secondary">Send daily digests and resolution certificates directly to <span class="text-primary font-weight-medium" th:text="${user.email}">user@example.com</span>.</span>
+                            </div>
+                            <div class="form-check form-switch fs-4 mb-0">
+                                <input class="form-check-input cursor-pointer" type="checkbox" checked>
+                            </div>
+                        </div>
+                        <hr class="my-1 text-muted">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="font-weight-bold d-block text-primary">SMS / WhatsApp Bulletins</span>
+                                <span class="small text-secondary">Get tracking ID reminders and OTP verifications via registered mobile phone.</span>
+                            </div>
+                            <div class="form-check form-switch fs-4 mb-0">
+                                <input class="form-check-input cursor-pointer" type="checkbox">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language & Region -->
+                <div class="card p-4" id="localizationSection">
+                    <div class="card-header border-bottom pb-3 mb-3">
+                        <h2 class="card-title h6 mb-0 font-weight-bold"><i class="bi bi-translate text-primary me-2"></i>Language &amp; Regional Localization</h2>
+                    </div>
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-8">
+                            <span class="font-weight-bold d-block text-primary">Preferred Portal Language</span>
+                            <span class="small text-secondary">Select your primary communication language for grievance receipts and portal menus.</span>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" onchange="window.showToast('Language preference saved. Multi-lingual translation pack will reload shortly.', 'success');">
+                                <option value="en" selected>English (Default)</option>
+                                <option value="hi">हिन्दी (Hindi)</option>
+                                <option value="ta">தமிழ் (Tamil)</option>
+                                <option value="te">తెలుగు (Telugu)</option>
+                                <option value="bn">বাংলা (Bengali)</option>
+                                <option value="mr">మరాఠీ / मराठी (Marathi)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy & Data -->
+                <div class="card p-4" id="privacySection">
+                    <div class="card-header border-bottom pb-3 mb-3">
+                        <h2 class="card-title h6 mb-0 font-weight-bold"><i class="bi bi-shield-check text-primary me-2"></i>Privacy &amp; Contact Visibility</h2>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="font-weight-bold d-block text-primary">Mask Phone Number on Public Tracker</span>
+                                <span class="small text-secondary">Hide your personal phone number when grievances are queried using tracking ID.</span>
+                            </div>
+                            <div class="form-check form-switch fs-4 mb-0">
+                                <input class="form-check-input cursor-pointer" type="checkbox" checked>
+                            </div>
+                        </div>
+                        <hr class="my-1 text-muted">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="font-weight-bold d-block text-primary">Anonymous Grievance Filing by Default</span>
+                                <span class="small text-secondary">Pre-select anonymous mode when submitting grievances to non-emergency civic departments.</span>
+                            </div>
+                            <div class="form-check form-switch fs-4 mb-0">
+                                <input class="form-check-input cursor-pointer" type="checkbox">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-top d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary px-4" onclick="window.showToast('All preferences and security settings have been saved successfully.', 'success');">
+                            <i class="bi bi-check-lg"></i> Save Preferences
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkSwitch = document.getElementById('settingsDarkToggle');
+            if (darkSwitch) {
+                darkSwitch.checked = (localStorage.getItem('civicpulse-theme') === 'dark');
+                darkSwitch.addEventListener('change', () => {
+                    const theme = darkSwitch.checked ? 'dark' : 'light';
+                    localStorage.setItem('civicpulse-theme', theme);
+                    document.documentElement.setAttribute('data-theme', theme);
+                    window.showToast('Theme switched to ' + theme.toUpperCase() + ' mode.', 'info');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

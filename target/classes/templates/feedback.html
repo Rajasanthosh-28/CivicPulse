@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Submit Feedback')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: sidebar('feedback')}"></nav>
+    <header th:replace="~{fragments/layout :: navbar}"></header>
+    <div th:replace="~{fragments/layout :: toasts}"></div>
+    
+    <main class="main-content">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Citizen Feedback &amp; Grievance Rating</h1>
+                <div class="page-breadcrumb">Account &gt; Submit Feedback</div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Form -->
+            <div class="col-lg-7">
+                <div class="card p-4">
+                    <div class="card-header border-bottom pb-3 mb-4 d-flex align-items-center justify-content-between">
+                        <h2 class="card-title h6 mb-0 font-weight-bold"><i class="bi bi-star-fill text-warning me-2"></i>Rate Your Experience</h2>
+                        <span class="badge bg-primary-subtle text-primary" th:if="${complaintId != null}" th:text="'Grievance #' + ${complaintId}">#102</span>
+                    </div>
+
+                    <form th:action="@{/feedback}" method="post">
+                        <input type="hidden" name="complaintId" th:if="${complaintId != null}" th:value="${complaintId}">
+                        <input type="hidden" name="rating" id="ratingInput" value="5">
+
+                        <div class="form-group mb-4 text-center p-4 bg-light rounded-3 border">
+                            <label class="form-label d-block text-secondary mb-3">Overall Satisfaction Rating</label>
+                            <div class="star-rating justify-content-center fs-2 mb-2">
+                                <span class="star active" data-value="1"><i class="bi bi-star-fill"></i></span>
+                                <span class="star active" data-value="2"><i class="bi bi-star-fill"></i></span>
+                                <span class="star active" data-value="3"><i class="bi bi-star-fill"></i></span>
+                                <span class="star active" data-value="4"><i class="bi bi-star-fill"></i></span>
+                                <span class="star active" data-value="5"><i class="bi bi-star-fill"></i></span>
+                            </div>
+                            <span class="small text-muted font-weight-medium" id="ratingLabelText">5 / 5 - Excellent &amp; Prompt Service</span>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-secondary">Resolution Speed</label>
+                                <select class="form-select">
+                                    <option>Satisfied (Within timeline)</option>
+                                    <option>Highly Prompt</option>
+                                    <option>Delayed / Slow</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-secondary">Officer Behavior &amp; Courtesy</label>
+                                <select class="form-select">
+                                    <option>Courteous &amp; Helpful</option>
+                                    <option>Professional</option>
+                                    <option>Needs Improvement</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="form-label">Detailed Comments &amp; Suggestions <span class="text-danger">*</span></label>
+                            <textarea class="form-control" name="comment" rows="4" required data-maxlength="500" placeholder="Please describe how the municipal department handled your grievance and suggestions for service improvement..."></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center pt-2">
+                            <span class="text-muted small"><i class="bi bi-lock me-1"></i>Your feedback is sent directly to department heads.</span>
+                            <button type="submit" class="btn btn-primary px-4 py-2">
+                                <i class="bi bi-send-fill me-1"></i> Submit Feedback
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: Info & Transparency -->
+            <div class="col-lg-5">
+                <div class="card p-4 mb-4 bg-primary text-white border-0 shadow">
+                    <h3 class="h5 mb-3 font-weight-bold"><i class="bi bi-award me-2"></i>How We Use Your Feedback</h3>
+                    <p class="small text-white-50 mb-3">CivicPulse operates under the Citizen Service Charter. Every evaluation submitted by verified citizens directly affects departmental ratings and officer performance metrics.</p>
+                    <ul class="list-unstyled small mb-0 d-flex flex-column gap-2 text-white-50">
+                        <li><i class="bi bi-check2-circle text-white me-2"></i> Monthly Quality Audit by Municipal Commissioner</li>
+                        <li><i class="bi bi-check2-circle text-white me-2"></i> Re-opening of unresolved grievances rated below 2 stars</li>
+                        <li><i class="bi bi-check2-circle text-white me-2"></i> Recognition awards for high-performing civic divisions</li>
+                    </ul>
+                </div>
+
+                <div class="card p-4">
+                    <h3 class="h6 font-weight-bold mb-3"><i class="bi bi-question-circle text-primary me-2"></i>Frequently Asked Questions</h3>
+                    <div class="d-flex flex-column gap-3 small">
+                        <div>
+                            <span class="font-weight-bold d-block text-primary">Can I modify my feedback later?</span>
+                            <span class="text-secondary">Once submitted, ratings are locked into the transparency ledger to ensure data integrity.</span>
+                        </div>
+                        <div>
+                            <span class="font-weight-bold d-block text-primary">Is my identity confidential?</span>
+                            <span class="text-secondary">Assigned ground officers can see your review to address specific technical complaints, but personal contact information remains protected.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelectorAll('.star-rating .star');
+            const hiddenInput = document.getElementById('ratingInput');
+            const labelText = document.getElementById('ratingLabelText');
+            const labels = ['1 / 5 - Poor Service', '2 / 5 - Below Average', '3 / 5 - Average / Acceptable', '4 / 5 - Very Good Service', '5 / 5 - Excellent & Prompt Service'];
+            
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const val = parseInt(star.getAttribute('data-value'));
+                    hiddenInput.value = val;
+                    if (labelText && labels[val-1]) labelText.textContent = labels[val-1];
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-value')) <= val) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

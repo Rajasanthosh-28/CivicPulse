@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Help Center & Support')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: sidebar('help')}"></nav>
+    <header th:replace="~{fragments/layout :: navbar}"></header>
+    <div th:replace="~{fragments/layout :: toasts}"></div>
+    
+    <main class="main-content">
+        <!-- Banner -->
+        <div class="card bg-primary text-white p-5 mb-5 border-0 shadow text-center position-relative overflow-hidden">
+            <div class="position-relative z-1">
+                <span class="badge bg-white text-primary mb-2 px-3 py-1 rounded-pill font-weight-bold">CITIZEN SUPPORT HELPDESK</span>
+                <h1 class="display-6 font-weight-bold mb-2">How can we assist you today?</h1>
+                <p class="text-white-50 mx-auto mb-4" style="max-width: 600px;">Explore comprehensive guides on grievance registration, status tracking, departmental workflows, and emergency municipal contacts.</p>
+                
+                <div class="input-group mx-auto shadow-lg rounded-pill overflow-hidden bg-white p-1" style="max-width: 550px;">
+                    <span class="input-group-text bg-transparent border-0 ps-3 text-secondary"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control border-0 shadow-none ps-2" placeholder="Type keywords: tracking ID, electricity, timeline, appeal..." id="helpSearchInput">
+                    <button class="btn btn-primary rounded-pill px-4 m-1 font-weight-bold" type="button" onclick="window.showToast('Searching citizen knowledgebase...', 'info');">Search</button>
+                </div>
+            </div>
+            <i class="bi bi-question-circle position-absolute text-white" style="font-size: 15rem; opacity: 0.05; right: -30px; top: -40px;"></i>
+        </div>
+
+        <!-- Quick Help Grid -->
+        <h2 class="h5 font-weight-bold mb-3"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Quick Assistance Topics</h2>
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="card p-4 h-100 text-center hover-lift">
+                    <div class="stat-icon blue mx-auto mb-3 shadow-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                        <i class="bi bi-file-earmark-plus"></i>
+                    </div>
+                    <h3 class="h6 font-weight-bold mb-2">Filing a New Grievance</h3>
+                    <p class="small text-secondary mb-3">Learn how to select appropriate municipal departments, attach geotagged photos, and assign urgency levels.</p>
+                    <a href="/complaint-form" class="btn btn-outline-primary btn-sm mt-auto">Go to Submission Wizard</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 h-100 text-center hover-lift">
+                    <div class="stat-icon green mx-auto mb-3 shadow-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <h3 class="h6 font-weight-bold mb-2">Tracking Status &amp; Updates</h3>
+                    <p class="small text-secondary mb-3">Understand status badges (Assigned, In Progress, Resolved) and track field officer assignment in real time.</p>
+                    <a href="/track-complaint" class="btn btn-outline-primary btn-sm mt-auto">Open Status Tracker</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 h-100 text-center hover-lift">
+                    <div class="stat-icon purple mx-auto mb-3 shadow-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                        <i class="bi bi-star"></i>
+                    </div>
+                    <h3 class="h6 font-weight-bold mb-2">Feedback &amp; Escalation</h3>
+                    <p class="small text-secondary mb-3">Not satisfied with a resolution? Learn how to rate officer performance or request an automated grievance re-audit.</p>
+                    <a href="/feedback" class="btn btn-outline-primary btn-sm mt-auto">Submit Service Evaluation</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- FAQ Accordion -->
+            <div class="col-lg-8">
+                <div class="card p-4">
+                    <h2 class="h5 font-weight-bold mb-4 border-bottom pb-3"><i class="bi bi-journal-text text-primary me-2"></i>Frequently Asked Questions (FAQ)</h2>
+                    
+                    <div class="accordion accordion-flush" id="faqAccordion">
+                        <div class="accordion-item border mb-3 rounded-3 overflow-hidden">
+                            <h3 class="accordion-header" id="faq1">
+                                <button class="accordion-button font-weight-bold bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true">
+                                    1. How do I register a citizen complaint accurately?
+                                </button>
+                            </h3>
+                            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body small text-secondary p-4">
+                                    Navigate to <strong class="text-primary">Submit Complaint</strong> from the left menu. Select the relevant category (e.g., Roads, Electricity, Water Supply), choose the urgency level, provide a clear descriptive title, enter exact location landmarks, and optionally upload supporting photographic evidence (up to 10MB). Upon submission, you will receive a unique tracking ID such as <code>CP-20260708-1042</code>.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border mb-3 rounded-3 overflow-hidden">
+                            <h3 class="accordion-header" id="faq2">
+                                <button class="accordion-button collapsed font-weight-bold bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                    2. What is the standard turnaround time (SLA) for resolution?
+                                </button>
+                            </h3>
+                            <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body small text-secondary p-4">
+                                    Resolution SLAs depend on grievance priority and category:
+                                    <ul class="mt-2 mb-0">
+                                        <li><strong>Urgent / Emergency:</strong> Within 24 hours (e.g., live wire hazards, sewage overflow)</li>
+                                        <li><strong>High Priority:</strong> Within 3 working days (e.g., major street light outage, pipeline burst)</li>
+                                        <li><strong>Medium / Low Priority:</strong> Within 7 working days (e.g., garbage collection schedules, road pothole patching)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border mb-3 rounded-3 overflow-hidden">
+                            <h3 class="accordion-header" id="faq3">
+                                <button class="accordion-button collapsed font-weight-bold bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                    3. Can I edit or delete a submitted grievance?
+                                </button>
+                            </h3>
+                            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body small text-secondary p-4">
+                                    Yes, provided the grievance is still in <strong>Pending</strong> status before a ground officer is assigned. Go to <a href="/complaint-history">Complaint History</a> and click the <strong>Delete</strong> action. Once an officer is assigned (`Assigned` or `In Progress`), records cannot be deleted to preserve municipal compliance audit trails.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border rounded-3 overflow-hidden">
+                            <h3 class="accordion-header" id="faq4">
+                                <button class="accordion-button collapsed font-weight-bold bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                                    4. What should I do if my grievance is marked 'Resolved' prematurely?
+                                </button>
+                            </h3>
+                            <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body small text-secondary p-4">
+                                    If ground action was incomplete, go to the <a href="/feedback">Feedback Portal</a> and submit a rating of 1 or 2 stars along with detailed comments explaining why the issue persists. Our automated quality monitor flags low-rated resolutions and immediately triggers an executive re-audit by the nodal department head.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency & Contact Support -->
+            <div class="col-lg-4 d-flex flex-column gap-4">
+                <!-- Emergency Helpline -->
+                <div class="card p-4 border-danger border-2">
+                    <div class="d-flex align-items-center gap-3 mb-3 text-danger">
+                        <i class="bi bi-exclamation-octagon-fill fs-2"></i>
+                        <div>
+                            <h3 class="h6 font-weight-bold mb-0">Emergency Civic Helplines</h3>
+                            <span class="small text-secondary">24x7 Direct Municipal Dispatch</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column gap-2 small">
+                        <div class="d-flex justify-content-between p-2 bg-light rounded font-weight-medium">
+                            <span>Police Emergency:</span> <span class="badge bg-danger">100 / 112</span>
+                        </div>
+                        <div class="d-flex justify-content-between p-2 bg-light rounded font-weight-medium">
+                            <span>Fire Brigade / Rescue:</span> <span class="badge bg-danger">101</span>
+                        </div>
+                        <div class="d-flex justify-content-between p-2 bg-light rounded font-weight-medium">
+                            <span>Ambulance Services:</span> <span class="badge bg-danger">108</span>
+                        </div>
+                        <div class="d-flex justify-content-between p-2 bg-light rounded font-weight-medium">
+                            <span>Women Helpline:</span> <span class="badge bg-danger">181</span>
+                        </div>
+                        <div class="d-flex justify-content-between p-2 bg-light rounded font-weight-medium">
+                            <span>Disaster Management:</span> <span class="badge bg-danger">1077</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Office -->
+                <div class="card p-4">
+                    <h3 class="h6 font-weight-bold mb-3"><i class="bi bi-building text-primary me-2"></i>Nodal Grievance Office</h3>
+                    <div class="small text-secondary d-flex flex-column gap-2">
+                        <p class="mb-1"><strong>CivicPulse Central Directorate</strong><br>3rd Floor, Municipal Administration Complex, Civic Centre, New Delhi - 110001</p>
+                        <hr class="my-1 text-muted">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-envelope text-primary"></i>
+                            <span>support@civicpulse.gov.in</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-telephone text-primary"></i>
+                            <span>1800-111-2222 (Toll Free)</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-clock text-primary"></i>
+                            <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>
